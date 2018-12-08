@@ -1,6 +1,8 @@
 # data
 data/
 
+*.png
+
 # IDE specific files
 .idea/
 

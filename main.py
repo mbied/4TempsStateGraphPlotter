@@ -1,5 +1,5 @@
 import json
-#import pygraphviz as pgv
+import pygraphviz as pgv
 import networkx as nx
 import matplotlib.pyplot as plt
 
@@ -14,15 +14,33 @@ if __name__ == "__main__":
     #https://stackoverflow.com/questions/17947027/open-dot-formatted-graph-from-python
     #https://networkx.github.io/documentation/latest/reference/drawing.html
 
+
+    G2 = pgv.AGraph(strict='False', overlap='False', directed="True")
+
+    label_dict={0:'DD', 1:'GD', 2:'DDGG', 3:'GDDG', 4:'Position fermée', 5:'Lâché'}
+
     G = nx.Graph()
     pos = nx.spring_layout(G)
-    label_dict = {}
+
     for idx in range(len(passes_dict['nodes'])):
         id = passes_dict['nodes'][idx]['id'] #unfortunatly idx and id is not always identical
         label = passes_dict['nodes'][idx]['attributes']['name']
         G.add_node(id)
-        label_dict[idx] = label
-    G.add_edge(1, 2)
+        G2.add_node(id, label=label_dict[idx])
+        #label_dict[idx] = label
+
+    for idx in range(len(passes_dict['edges'])):
+        source = passes_dict['edges'][idx]['source']
+        target = passes_dict['edges'][idx]['target']
+        edge_label = passes_dict['edges'][idx]['label']
+        G.add_edge(source, target)
+        G2.add_edge(source, target, label=edge_label)
+
+
+    G2.layout()
+    G2.draw('file.png')
+
+
     label_dict={0:'DD', 1:'GD', 2:'DDGG', 3:'GDDG', 4:'Position fermée', 5:'Lâché'}
     edge_labels_dict = {}
     #edge_labels_dict['0'] = 'test'
