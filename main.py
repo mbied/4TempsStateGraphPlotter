@@ -15,8 +15,8 @@ if __name__ == "__main__":
     #https://networkx.github.io/documentation/latest/reference/drawing.html
 
 
-    G2 = pgv.AGraph(strict='False', overlap='False', directed="True")
-
+    G2 = pgv.AGraph(directed=True, strict=False, overlap=False, nodesep=4)
+  #  G2.attr(size='5000,5000')
     label_dict={0:'DD', 1:'GD', 2:'DDGG', 3:'GDDG', 4:'Position fermée', 5:'Lâché'}
 
     G = nx.Graph()
@@ -37,7 +37,8 @@ if __name__ == "__main__":
         G2.add_edge(source, target, label=edge_label)
 
 
-    G2.layout()
+    G2.layout(prog='dot')
+    #neato, dot, twopi, circo, fdp, nop, wc, acyclic, gvpr, gvcolor, ccomps, sccmap, tred, sfdp.
     G2.draw('file.png')
 
 
@@ -48,8 +49,11 @@ if __name__ == "__main__":
 
     #nx.draw_networkx_labels(G, pos, labels, font_size= 16)
     #nx.draw_networkx_edge_labels(G, pos, edge_labels = edge_labels_dict)
-    nx.draw(G, labels=label_dict, with_labels=True)
-   # nx.draw_networkx_edge_labels(G)
+    G3 = nx.Graph(G2)
+    nx.draw(G3)
     plt.show()
+    #nx.draw(G, labels=label_dict, with_labels=True)
+   # nx.draw_networkx_edge_labels(G)
+    #plt.show()
     #print(label_dict)
     print("success")
